@@ -10,24 +10,44 @@ builds:
       - CGO_ENABLED=0
     goos:
       - linux
+      - darwin
       # - windows
-      # - darwin
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - '-s -w -X main.version={{.Version}} -X main.commit={{.Commit}}'
 
 archives:
   - id: default
     format: tar.gz
-    name_template: "{{ .ProjectName }}-{{ .Version }}-{{ .Os }}-{{ .Arch }}"
+    name_template: "{{ .ProjectName }}-v{{ .Version }}-{{ .Os }}-{{ .Arch }}"
     format_overrides:
       - goos: windows
         format: zip
 
 changelog:
+  skip: false
+  use: git
+  ## "abbrev" value -1 removes the commit SHA prefixes from changelog
+  abbrev: -1
   sort: asc
   filters:
+    include:
+      - "^feat"
+      - "^fix"
+      - "^chore"
     exclude:
       - "^ci(:|\\()"
       - "^docs(:|\\()"
       - "^test(:|\\()"
+  groups:
+  - title: Features
+    regexp: '^.*?feat(\([[:word:]]+\))??!?:.+$'
+    order: 0
+  - title: "Bug Fixes"
+    regexp: '^.*?fix(\([[:word:]]+\))??!?:.+$'
+    order: 1
 
 release:
   ids:
