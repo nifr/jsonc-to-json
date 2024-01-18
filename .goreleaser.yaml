@@ -1,0 +1,41 @@
+# yaml-language-server: $schema=https://goreleaser.com/static/schema.json
+# vim: set ts=2 sw=2 tw=0 fo=cnqoj
+version: 1
+project_name: jsonc-to-json
+dist: './dist'
+report_sizes: true
+
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      # - windows
+      # - darwin
+
+archives:
+  - id: default
+    format: tar.gz
+    name_template: name_template: "{{ .ProjectName }}-{{ .Version }}-{{ .Os }}-{{ .Arch }}"
+    format_overrides:
+      - goos: windows
+        format: zip
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^ci(:|\\()"
+      - "^docs(:|\\()"
+      - "^test(:|\\()"
+
+release:
+  ids:
+  - default
+  draft: true
+  replace_existing_draft: true
+  prerelease: false
+  make_latest: true
+  mode: replace
+  name_template: '{{.Tag}}'
+  skip_upload: false
