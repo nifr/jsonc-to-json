@@ -6,6 +6,7 @@ A `go` implementation of [strip-json-comments-cli](https://github.com/sindresorh
 
 ## Features
 
+* single static binary
 * read JSONC input from a file or stdin/pipe
 * output JSON result to stdout
 * (*optional*): validate the JSON result
@@ -14,13 +15,16 @@ A `go` implementation of [strip-json-comments-cli](https://github.com/sindresorh
 ## Arguments & Flags
 
 |||
-|:----------------|-------------|
-| `<no argument>` | print usage instructions |
-| `-file "${path}"`  | read input from given file, use `-` to read from stdin |
-| `-validate`     | validate JSON result |
-| `-pretty`       | pretty print JSON result |
+|:------------------|--------------------------------------------------------|
+| `<no argument>`   | print usage instructions                               |
+| `-file "${path}"` | read input from given file, use `-` to read from stdin |
+| `-validate`       | validate JSON result                                   |
+| `-pretty`         | pretty print JSON result                               |
 
 ## Development
+
+<details>
+<summary>Instructions</summary>
 
 ```bash
 # print usage
@@ -43,3 +47,5 @@ go build -ldflags "-extldflags '-static' -s -w" -o ./strip-json-comments
 # build with external linker i.e. gcc
 go build -ldflags "-linkmode 'external' -extldflags '-static'" -o ./strip-json-comments
 ```
+
+</details>
