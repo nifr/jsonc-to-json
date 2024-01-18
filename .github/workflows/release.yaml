@@ -20,6 +20,10 @@ jobs:
       - id: setup_go
         name: Set up Go
         uses: actions/setup-go@v4
+        with:
+          go-version-file: './go.mod'
+          cache-dependency-path: |
+             ./go.sum
       - id: run_goreleaser
         name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v5
